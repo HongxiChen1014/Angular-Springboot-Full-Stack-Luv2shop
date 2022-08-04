@@ -24,6 +24,9 @@ public class Product {
     @Column(name="sku")
     private String sku;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name="description")
     private String description;
 
@@ -37,7 +40,7 @@ public class Product {
     private boolean active;
 
     @Column(name = "units_in_stock")
-    private int unitsInstock;
+    private int unitsInStock;
 
     @Column(name = "date_created")
     @CreationTimestamp // Hibernate will automatically manage the timestamps
