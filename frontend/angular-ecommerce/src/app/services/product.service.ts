@@ -17,13 +17,19 @@ export class ProductService {
 
 // Map the JSON data from Spring Data REST to Product Array
   getProductList(theCategoryId: number): Observable<Product[]> {
+
     // need to build URL based on category id
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
 
+    return this.getProducts(searchUrl);
+  }
 
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products)
-    );
+  searchProducts(theKeyword:string): Observable<Product[]> {
+
+    // need to build URL based on the keyword
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
+
+    return this.getProducts(searchUrl);
   }
 
   getProductCategories(): Observable<ProductCategory[]> {
@@ -32,6 +38,13 @@ export class ProductService {
       map(response => response._embedded.productCategory)
     );
   }
+
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
+      map(response => response._embedded.products)
+    );
+}
+
 }
 
 interface GetResponseProducts {
