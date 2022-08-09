@@ -18,11 +18,12 @@ import java.util.Set;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
+
     private EntityManager entityManager;
 
     @Autowired
-    public MyDataRestConfig(EntityManager entityManager){
-        this.entityManager = entityManager;
+    public MyDataRestConfig(EntityManager theEntityManager) {
+        entityManager = theEntityManager;
     }
 
     @Override
@@ -65,6 +66,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         Class[] domainTypes = entityClasses.toArray(new Class[0]);
         config.exposeIdsFor(domainTypes);
     }
+
 }
 
 
