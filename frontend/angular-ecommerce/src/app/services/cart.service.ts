@@ -55,7 +55,7 @@ export class CartService {
     this.totalQuantity.next(totalQuantityValue); // publish/send event
 
     // log cart data just for debugging purposes
-    this.logCartData(totalPriceValue, totalQuantityValue);
+    // this.logCartData(totalPriceValue, totalQuantityValue);
   }
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
