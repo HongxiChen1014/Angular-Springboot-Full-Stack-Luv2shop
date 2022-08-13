@@ -11,8 +11,8 @@ import java.util.List;
 @CrossOrigin("http://localhost:4200")
 @RepositoryRestResource
 public interface StateRepository extends JpaRepository<State, Integer> {
-
     // To retrieve states for a given country code
     // http://localhost:8080/api/states/search/fingByCountryCode?code=IN
     List<State> findByCountryCode(@Param("code") String code);
+
 }
