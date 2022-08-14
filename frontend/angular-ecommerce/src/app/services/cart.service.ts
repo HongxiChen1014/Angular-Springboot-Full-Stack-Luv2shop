@@ -12,7 +12,18 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-  constructor() {}
+// once a web browser tab is closed then data is no longer available
+  storage: Storage = sessionStorage;
+
+  constructor() {
+    // read data from Storage
+    let data = JSON.parse(this.storage.getItem('cartItems'));
+    if(data != null) {
+      this.cartItems = data;
+      // compute totals based on the data that is read from storage
+      this.computeCartTotals();
+    }
+  }
 
   addToCart(theCartItem: CartItem) {
     // check if we already have the item in our cart
@@ -54,8 +65,14 @@ export class CartService {
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue); // publish/send event
 
+    //persist cart data
+    this.persistCartItems();
     // log cart data just for debugging purposes
     // this.logCartData(totalPriceValue, totalQuantityValue);
+  }
+
+  persistCartItems() {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
   logCartData(totalPriceValue: number, totalQuantityValue: number) {
