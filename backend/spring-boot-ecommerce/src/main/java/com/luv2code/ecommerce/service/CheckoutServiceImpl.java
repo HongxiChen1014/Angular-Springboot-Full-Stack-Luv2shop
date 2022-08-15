@@ -29,6 +29,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // generate tracking number
         String orderTrackingNumber = generateOrderTrackingNumber();
+        order.setOrderTrackingNumber(orderTrackingNumber);
 
         // populate order with orderItems
         Set<OrderItem> orderItems = purchase.getOrderItems();
@@ -40,6 +41,14 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // populate customer with order
         Customer customer = purchase.getCustomer();
+
+        // check if this is an existing customer
+        String theEmail = customer.getEmail();
+        Customer customerFromDB = customerRepository.findByEmail(theEmail);
+
+        if(customerFromDB != null) {
+            customer = customerFromDB;
+        }
         customer.add(order);
 
         // save to the database
