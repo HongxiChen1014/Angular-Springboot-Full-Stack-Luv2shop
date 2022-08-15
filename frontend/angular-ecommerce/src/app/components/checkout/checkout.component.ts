@@ -28,8 +28,10 @@ export class CheckoutComponent implements OnInit {
 
   countries: Country[] = [];
 
-shippingAddressStates: State[] = [];
-billingAddressStates: State[] = [];
+  shippingAddressStates: State[] = [];
+  billingAddressStates: State[] = [];
+
+  storage:Storage = sessionStorage;
 
   constructor(private formBuilder: FormBuilder,
               private luv2ShopFormService: Luv2ShopFormService,
@@ -40,6 +42,8 @@ billingAddressStates: State[] = [];
 
   ngOnInit(): void {
    this.reviewCartDetails();
+
+   const theEmail = JSON.parse(this.storage.getItem('userEmail'));
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -55,7 +59,7 @@ billingAddressStates: State[] = [];
           Luv2ShopValidators.notOnlyWhitespace,
         ]),
 
-        email: new FormControl('', [
+        email: new FormControl(theEmail, [
           Validators.required,
           // ^[a-z0-9._%+-]+: match any combination of letters and digits, optional period
           // [a-z0-9.-]+\\: match any combination of letters and digits, with period
