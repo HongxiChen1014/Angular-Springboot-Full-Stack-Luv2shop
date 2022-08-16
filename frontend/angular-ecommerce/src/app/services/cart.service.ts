@@ -12,13 +12,13 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
-// once a web browser tab is closed then data is no longer available
+  // once a web browser tab is closed then data is no longer available
   storage: Storage = sessionStorage;
 
   constructor() {
     // read data from Storage
     let data = JSON.parse(this.storage.getItem('cartItems'));
-    if(data != null) {
+    if (data != null) {
       this.cartItems = data;
       // compute totals based on the data that is read from storage
       this.computeCartTotals();
@@ -93,28 +93,26 @@ export class CartService {
   }
 
   decrementQuantity(theCartItem: CartItem) {
+    theCartItem.quantity--;
 
-  theCartItem.quantity--;
-
-  if (theCartItem.quantity === 0) {
-    this.remove(theCartItem);
+    if (theCartItem.quantity === 0) {
+      this.remove(theCartItem);
+    } else {
+      this.computeCartTotals();
+    }
   }
-  else {
-    this.computeCartTotals();
+
+  remove(theCartItem: CartItem) {
+    // get index of item in the array
+    const itemIndex = this.cartItems.findIndex(
+      (tempCartItem) => tempCartItem.id === theCartItem.id
+    );
+
+    // if found, remove the item from the array at the given index
+    if (itemIndex > -1) {
+      this.cartItems.splice(itemIndex, 1);
+
+      this.computeCartTotals();
+    }
   }
-}
-
-remove(theCartItem: CartItem) {
-
-  // get index of item in the array
-  const itemIndex = this.cartItems.findIndex( tempCartItem => tempCartItem.id === theCartItem.id );
-
-  // if found, remove the item from the array at the given index
-  if (itemIndex > -1) {
-    this.cartItems.splice(itemIndex, 1);
-
-    this.computeCartTotals();
-  }
-}
-
 }

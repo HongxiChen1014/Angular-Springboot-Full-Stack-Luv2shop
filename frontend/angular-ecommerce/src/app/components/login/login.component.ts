@@ -14,7 +14,10 @@ import myAppConfig from '../../config/my-app-config';
 export class LoginComponent implements OnInit {
   oktaSignin: any;
 
-  constructor(private oktaAuthService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
+  constructor(
+    private oktaAuthService: OktaAuthStateService,
+    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth
+  ) {
     this.oktaSignin = new OktaSignIn({
       logo: 'assets/images/logo.png',
       baseUrl: myAppConfig.oidc.issuer.split('/oauth2')[0],

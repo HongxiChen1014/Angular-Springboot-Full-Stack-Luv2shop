@@ -7,34 +7,30 @@ import { State } from '../common/state';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Luv2ShopFormService {
-
   private countriesUrl = environment.luv2shopApiUrl + '/countries';
   private statesUrl = environment.luv2shopApiUrl + '/states';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getCountries(): Observable<Country[]> {
+    return this.httpClient
+      .get<GetResponseCountries>(this.countriesUrl)
+      .pipe(map((response) => response._embedded.countries));
+  }
 
-  return this.httpClient.get<GetResponseCountries>(this.countriesUrl).pipe(
-    map(response => response._embedded.countries)
-  );
-}
+  getStates(theCountryCode: string): Observable<State[]> {
+    // search url
+    const searchStatesUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
 
-getStates(theCountryCode: string): Observable<State[]> {
-
-  // search url
-  const searchStatesUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
-
-  return this.httpClient.get<GetResponseStates>(searchStatesUrl).pipe(
-    map(response => response._embedded.states)
-  );
-}
+    return this.httpClient
+      .get<GetResponseStates>(searchStatesUrl)
+      .pipe(map((response) => response._embedded.states));
+  }
 
   getCreditCardMonths(startMonth: number): Observable<number[]> {
-
     let data: number[] = [];
 
     // build an array for "Month" dropdown list
@@ -44,7 +40,7 @@ getStates(theCountryCode: string): Observable<State[]> {
       data.push(theMonth);
     }
 
-    return of(data);   // The "of" operator from rxjs will wrap an object as an Observable
+    return of(data); // The "of" operator from rxjs will wrap an object as an Observable
   }
 
   getCreditCardYears(): Observable<number[]> {
@@ -55,7 +51,7 @@ getStates(theCountryCode: string): Observable<State[]> {
     const startYear: number = new Date().getFullYear(); // Get Current Year
     const endYear: number = startYear + 10;
 
-    for(let theYear = startYear; theYear <= endYear; theYear++) {
+    for (let theYear = startYear; theYear <= endYear; theYear++) {
       data.push(theYear);
     }
 
@@ -66,11 +62,11 @@ getStates(theCountryCode: string): Observable<State[]> {
 interface GetResponseCountries {
   _embedded: {
     countries: Country[];
-  }
+  };
 }
 
 interface GetResponseStates {
   _embedded: {
     states: State[];
-  }
+  };
 }

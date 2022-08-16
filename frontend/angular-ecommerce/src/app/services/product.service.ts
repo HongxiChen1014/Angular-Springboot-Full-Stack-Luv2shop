@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ProductService {
-
   private baseUrl = environment.luv2shopApiUrl + '/products';
   private categoryUrl = environment.luv2shopApiUrl + '/product-category';
 
