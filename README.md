@@ -2,6 +2,7 @@
 Full Stack: Angular and Spring Boot 
 
 Luvshop is a Full-Stack Ecommerce web app that allows users to browse items online, add to a cart and proceed with payments.
+
 <img src="https://github.com/HongxiChen1014/ecommerce/blob/master/demoSource/landing.png" alt="Landing Page" width="600" height="400">
 
 ### Tools and Frameworks
@@ -21,7 +22,7 @@ Backend: Spring Boot(Hybernate, spring data JPA)
 
 4. Used {FormControl, Validators} to check the validation of checkout form input.Processed payments through Stripe.
 <img src="https://github.com/HongxiChen1014/ecommerce/blob/master/demoSource/checkOut1.png" alt="checkout1" width="600" height="400">
-<img src="https://github.com/HongxiChen1014/ecommerce/blob/master/demoSource/checkOut2.png" alt="checkout2" width="600" height="400">
+<img src="https://github.com/HongxiChen1014/ecommerce/blob/master/demoSource/checkOut2.png" alt="checkout2" width="600">
 <img src="https://github.com/HongxiChen1014/ecommerce/blob/master/demoSource/checkInput.png" alt="Check Input" width="600" height="400">
 
 5. Utilized ssl-localhost to secure communication with HTTPS
